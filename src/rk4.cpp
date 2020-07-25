@@ -45,8 +45,9 @@ namespace rk4
 		for (int i = 0; i < n; i++) {
 			stateNext[i] = stateCurrent[i] + ((k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) / 6.0) * dt;
 		}
-		//Update stateCurrent
+		//Update stateCurrent and time
 		stateCurrent = stateNext;
+		t = t + dt;
 		return stateNext;
 	}
 }
