@@ -6,11 +6,11 @@
 #include "rk4.h"
 
 //Global pendulum properties
-constexpr double M_1 = 2.0;
-constexpr double M_2 = 1.0;
-constexpr double L_1 = 3.0;
-constexpr double L_2 = 2.0;
-constexpr double GRAV = 9.8;
+double M_1 = 1.0;
+double M_2 = 1.0;
+double L_1 = 1.0;
+double L_2 = 1.0;
+double GRAV = 9.8;
 
 //Derivative functions (differential equations) from point mass double pendulum Lagrangian
 //All angular units in radians
@@ -44,7 +44,20 @@ double x3prime(std::vector<double> x, double time) {
 int main()
 {
     //Initial state
-    std::vector<double> stateInitial{ 2, 1, 2, 1 };
+    double theta1, theta2;
+    std::cout << "Enter first mass" << std::endl;
+    std::cin >> M_1;
+    std::cout << "Enter first arm length" << std::endl;
+    std::cin >> L_1;
+    std::cout << "Enter second mass" << std::endl;
+    std::cin >> M_2;
+    std::cout << "Enter second arm length" << std::endl;
+    std::cin >> L_2;
+    std::cout << "Enter first angle, in radians, from vertical" << std::endl;
+    std::cin >> theta1;
+    std::cout << "Enter second angle, in radians, from vertical" << std::endl;
+    std::cin >> theta2;
+    std::vector<double> stateInitial{ theta1, 0, theta2, 0 };
 
     //Create vector of differential equations
     std::vector<double (*)(std::vector<double>, double)> diffeqs;
