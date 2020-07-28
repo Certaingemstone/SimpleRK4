@@ -72,6 +72,7 @@ int main()
     //Output file
     std::fstream file;
     file.open("angles.csv", std::fstream::out);
+    if (!file.is_open()) { std::cerr << "Failed to open or create output file." << std::endl; }
     
     for (int i = 0; i < 1000; i++) {
         Solver.iterate();

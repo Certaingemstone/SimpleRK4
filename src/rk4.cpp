@@ -9,7 +9,7 @@ namespace rk4
 
 	std::vector<double> rk4Solve::iterate()
 	{
-		std::vector<double> stateNext (n), stateIntermediate1 (n), stateIntermediate2 (n), stateIntermediate3 (n);
+		std::vector<double> stateNext (n), stateIntermediate (n);
 		std::vector<double> k1 (n), k2 (n), k3 (n), k4 (n);
 
 		//Obtain k1 (derivative vector at current state)
@@ -19,26 +19,26 @@ namespace rk4
 
 		//Obtain k2 (derivative vector at half timestep, linear from stateCurrent along k1) 
 		for (int i = 0; i < n; i++) {
-			stateIntermediate1[i] = stateCurrent[i] + k1[i] * dt / 2.0;
+			stateIntermediate[i] = stateCurrent[i] + k1[i] * dt / 2.0;
 		}
 		for (int i = 0; i < n; i++) {
-			k2[i] = derivatives[i](stateIntermediate1, t + dt/2.0);
+			k2[i] = derivatives[i](stateIntermediate, t + dt/2.0);
 		}
 
 		//Obtain k3 (derivative vector at half timestep, linear from stateCurrent along k2)
 		for (int i = 0; i < n; i++) {
-			stateIntermediate2[i] = stateCurrent[i] + k2[i] * dt / 2.0;
+			stateIntermediate[i] = stateCurrent[i] + k2[i] * dt / 2.0;
 		}
 		for (int i = 0; i < n; i++) {
-			k3[i] = derivatives[i](stateIntermediate2, t + dt/2.0);
+			k3[i] = derivatives[i](stateIntermediate, t + dt/2.0);
 		}
 
 		//Obtain k4 (derivative vector at full timestep, linear from stateCurrent along k3)
 		for (int i = 0; i < n; i++) {
-			stateIntermediate3[i] = stateCurrent[i] + k3[i] * dt;
+			stateIntermediate[i] = stateCurrent[i] + k3[i] * dt;
 		}
 		for (int i = 0; i < n; i++) {
-			k4[i] = derivatives[i](stateIntermediate3, t + dt);
+			k4[i] = derivatives[i](stateIntermediate, t + dt);
 		}
 
 		//Update stateNext using k
